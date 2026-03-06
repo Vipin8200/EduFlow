@@ -13,30 +13,114 @@ import {
     XCircle
 } from "lucide-react";
 
+const roleData = {
+    Teacher: {
+        accessModules: [
+            { name: "Dashboard", icon: LayoutDashboard, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Student Management", icon: Users, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Homework & LMS", icon: BookOpen, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Fees & Accounts", icon: Wallet, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Exams & Results", icon: ClipboardCheck, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Transport", icon: Bus, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+        ],
+        permissions: [
+            { key: "can_create_exams", desc: "Allows creating and scheduling new exams", value: true },
+            { key: "can_delete_students", desc: "Allows removing students from the system", value: false },
+            { key: "can_view_payroll", desc: "Allows viewing salary and payroll information", value: false },
+            { key: "can_take_attendance", desc: "Allows marking daily student attendance", value: true },
+        ],
+        activities: [
+            { user: "Priya Desai", avatar: "https://i.pravatar.cc/150?u=priya", action: "Marked attendance for Class 10-A", time: "Today, 08:30 AM", ip: "192.168.1.104" },
+            { user: "Vikram Singh", avatar: "https://i.pravatar.cc/150?u=vikram", action: "Uploaded Mid-Term Exam Results", time: "Yesterday, 04:15 PM", ip: "192.168.1.112" },
+            { user: "Neha Sharma", avatar: "https://i.pravatar.cc/150?u=neha", action: "Created new Homework assignment", time: "Yesterday, 02:00 PM", ip: "192.168.1.109" },
+        ]
+    },
+    Student: {
+        accessModules: [
+            { name: "Dashboard", icon: LayoutDashboard, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Student Management", icon: Users, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Homework & LMS", icon: BookOpen, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Fees & Accounts", icon: Wallet, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Exams & Results", icon: ClipboardCheck, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Transport", icon: Bus, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+        ],
+        permissions: [
+            { key: "can_submit_homework", desc: "Allows submitting completed assignments", value: true },
+            { key: "can_view_grades", desc: "Allows viewing own exam results and grades", value: true },
+            { key: "can_pay_fees", desc: "Allows online fee payment", value: false },
+            { key: "can_message_teachers", desc: "Allows sending messages to assigned teachers", value: true },
+        ],
+        activities: [
+            { user: "Rahul Kumar", avatar: "https://i.pravatar.cc/150?u=rahul", action: "Submitted Math Homework", time: "Today, 10:15 AM", ip: "192.168.1.120" },
+            { user: "Anita Patel", avatar: "https://i.pravatar.cc/150?u=anita", action: "Viewed Science Results", time: "Yesterday, 06:45 PM", ip: "192.168.1.135" },
+        ]
+    },
+    Parent: {
+        accessModules: [
+            { name: "Dashboard", icon: LayoutDashboard, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Student Management", icon: Users, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Homework & LMS", icon: BookOpen, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Fees & Accounts", icon: Wallet, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Exams & Results", icon: ClipboardCheck, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Transport", icon: Bus, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+        ],
+        permissions: [
+            { key: "can_view_attendance", desc: "Allows viewing child's attendance records", value: true },
+            { key: "can_pay_fees", desc: "Allows online fee payment", value: true },
+            { key: "can_message_teachers", desc: "Allows sending messages to teachers", value: true },
+            { key: "can_apply_leave", desc: "Allows applying for child's leave", value: true },
+        ],
+        activities: [
+            { user: "Amit Shah", avatar: "https://i.pravatar.cc/150?u=amit", action: "Paid Term 2 Fees", time: "Today, 11:30 AM", ip: "192.168.1.200" },
+            { user: "Sunita Verma", avatar: "https://i.pravatar.cc/150?u=sunita", action: "Applied Medical Leave", time: "Yesterday, 09:00 AM", ip: "192.168.1.205" },
+        ]
+    },
+    Admin: {
+        accessModules: [
+            { name: "Dashboard", icon: LayoutDashboard, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Student Management", icon: Users, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Homework & LMS", icon: BookOpen, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Fees & Accounts", icon: Wallet, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Exams & Results", icon: ClipboardCheck, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Transport", icon: Bus, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+        ],
+        permissions: [
+            { key: "can_manage_users", desc: "Allows adding, editing, or deleting users", value: true },
+            { key: "can_modify_roles", desc: "Allows changing user roles and permissions", value: true },
+            { key: "can_view_system_logs", desc: "Allows viewing system audit logs", value: true },
+            { key: "can_configure_settings", desc: "Allows changing global system settings", value: true },
+        ],
+        activities: [
+            { user: "Super Admin", avatar: "https://i.pravatar.cc/150?u=admin1", action: "Changed Academic Year Settings", time: "Today, 10:00 AM", ip: "10.0.0.1" },
+            { user: "System Admin", avatar: "https://i.pravatar.cc/150?u=admin2", action: "Created backup of database", time: "Yesterday, 11:55 PM", ip: "10.0.0.5" },
+        ]
+    },
+    Accountant: {
+        accessModules: [
+            { name: "Dashboard", icon: LayoutDashboard, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
+            { name: "Student Management", icon: Users, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Homework & LMS", icon: BookOpen, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Fees & Accounts", icon: Wallet, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
+            { name: "Exams & Results", icon: ClipboardCheck, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+            { name: "Transport", icon: Bus, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
+        ],
+        permissions: [
+            { key: "can_collect_fees", desc: "Allows processing incoming fee payments", value: true },
+            { key: "can_generate_invoices", desc: "Allows generating and printing fee receipts", value: true },
+            { key: "can_view_payroll", desc: "Allows viewing staff salary details", value: true },
+            { key: "can_modify_marks", desc: "Allows modifying student exam marks", value: false },
+        ],
+        activities: [
+            { user: "Ritu Desai", avatar: "https://i.pravatar.cc/150?u=ritu", action: "Generated Fee Defaulters Report", time: "Today, 12:45 PM", ip: "192.168.1.150" },
+            { user: "Ritu Desai", avatar: "https://i.pravatar.cc/150?u=ritu", action: "Processed Staff Salaries", time: "Yesterday, 05:30 PM", ip: "192.168.1.150" },
+        ]
+    }
+};
+
 export default function InstituteRoleSwitch() {
     const [selectedRole, setSelectedRole] = useState("Teacher");
 
-    const accessModules = [
-        { name: "Dashboard", icon: LayoutDashboard, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
-        { name: "Student Management", icon: Users, status: "Read Only", statusColor: "bg-orange-100 text-orange-700" },
-        { name: "Homework & LMS", icon: BookOpen, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
-        { name: "Fees & Accounts", icon: Wallet, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
-        { name: "Exams & Results", icon: ClipboardCheck, status: "Full Access", statusColor: "bg-green-100 text-green-700" },
-        { name: "Transport", icon: Bus, status: "No Access", statusColor: "bg-gray-100 text-gray-500" },
-    ];
-
-    const permissions = [
-        { key: "can_create_exams", desc: "Allows creating and scheduling new exams", value: true },
-        { key: "can_delete_students", desc: "Allows removing students from the system", value: false },
-        { key: "can_view_payroll", desc: "Allows viewing salary and payroll information", value: false },
-        { key: "can_take_attendance", desc: "Allows marking daily student attendance", value: true },
-    ];
-
-    const activities = [
-        { user: "Priya Desai", avatar: "https://i.pravatar.cc/150?u=priya", action: "Marked attendance for Class 10-A", time: "Today, 08:30 AM", ip: "192.168.1.104" },
-        { user: "Vikram Singh", avatar: "https://i.pravatar.cc/150?u=vikram", action: "Uploaded Mid-Term Exam Results", time: "Yesterday, 04:15 PM", ip: "192.168.1.112" },
-        { user: "Neha Sharma", avatar: "https://i.pravatar.cc/150?u=neha", action: "Created new Homework assignment", time: "Yesterday, 02:00 PM", ip: "192.168.1.109" },
-    ];
+    const { accessModules, permissions, activities } = roleData[selectedRole] || roleData["Teacher"];
 
     return (
         <div className="max-w-[1200px] mx-auto p-4 md:p-8 space-y-12">
@@ -89,7 +173,7 @@ export default function InstituteRoleSwitch() {
             {/* --- Section 2: Role Access Preview --- */}
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
                 <div className="lg:w-1/3">
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">Role Access Preview</h2>
+                    <h2 className="text-xl font-bold text-gray-900 mb-2">{selectedRole} Access Preview</h2>
                     <p className="text-gray-500 text-sm">Overview of accessible modules and features for the selected role.</p>
                 </div>
                 <div className="lg:w-2/3 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">

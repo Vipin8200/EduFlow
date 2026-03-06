@@ -8,7 +8,7 @@ import MainLayout from "./layouts/MainLayout";
 // future pages
 import Profile from "./pages/Profile/Profile";
 import SwitchUser from "./pages/SwitchUser/SwitchUser";
-// import EmployeeMaster from "./pages/Employee/EmployeeMaster";
+import EmployeeMaster from "./pages/EmployeeManagement/EmployeeMaster";
 // import EmployeeList from "./pages/Employee/EmployeeList";
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
           path="/employee-master"
           element={
             <MainLayout>
-              {/* <EmployeeMaster /> */}
+              <EmployeeMaster />
             </MainLayout>
           }
         />
