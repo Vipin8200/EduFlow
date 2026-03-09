@@ -9,7 +9,8 @@ import MainLayout from "./layouts/MainLayout";
 import Profile from "./pages/Profile/Profile";
 import SwitchUser from "./pages/SwitchUser/SwitchUser";
 import EmployeeMaster from "./pages/EmployeeManagement/EmployeeMaster";
-// import EmployeeList from "./pages/Employee/EmployeeList";
+import EmployeeAttendance from "./pages/EmployeeManagement/EmployeeAttendance";
+import EmployeeLeave from "./pages/EmployeeManagement/LeaveManagement";
 
 function App() {
 
@@ -60,10 +61,19 @@ function App() {
         />
 
         <Route
-          path="/employee-list"
+          path="/employee-attendance"
           element={
             <MainLayout>
-              {/* <EmployeeList /> */}
+              <EmployeeAttendance />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path="/employee-leave"
+          element={
+            <MainLayout>
+              <EmployeeLeave />
             </MainLayout>
           }
         />

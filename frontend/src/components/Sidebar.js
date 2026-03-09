@@ -85,7 +85,7 @@ const MENU_ITEMS = [
     subItems: [
       { id: "emp-master", label: "Employee Master", icon: Contact, path: "/employee-master" },
       { id: "emp-attendance", label: "Employee Attendance", icon: UserCheck, path: "/employee-attendance" },
-      { id: "leave", label: "Leave Management", icon: Plane, path: "/leave-management" },
+      { id: "leave", label: "Leave Management", icon: Plane, path: "/employee-leave" },
       { id: "shift", label: "Shift & Duty Management", icon: Clock, path: "/shift-management" },
       { id: "payroll", label: "Payroll", icon: Banknote, path: "/payroll" },
       { id: "id-card", label: "ID Card Management", icon: BadgeCheck, path: "/id-card-management" },
