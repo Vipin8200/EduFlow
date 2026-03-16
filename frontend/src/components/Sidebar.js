@@ -109,9 +109,9 @@ const MENU_ITEMS = [
       { id: "student-master", label: "Student Master", icon: Contact, path: "/student-master" },
       { id: "student-docs", label: "Student Documents", icon: FileText, path: "/student-documents" },
       { id: "student-leave", label: "Student Leave", icon: Plane, path: "/student-leave" },
-      { id: "student-id", label: "Student ID Cards", icon: BadgeCheck, path: "/student-id-cards" },
+      { id: "student-id", label: "Student ID Cards", icon: BadgeCheck, path: "/student-id-card" },
       { id: "exit-management", label: "Exit Management", icon: LogOut, path: "/exit-management" },
-      { id: "bulk-import", label: "Bulk Import", icon: UploadCloud, path: "/bulk-import" }
+      { id: "bulk-Upload", label: "Bulk Import", icon: UploadCloud, path: "/bulk-import" }
     ]
   },
   {
@@ -249,14 +249,30 @@ const MENU_ITEMS = [
 ];
 
 export default function Sidebar() {
-  const [openMenus, setOpenMenus] = useState([]); // Default all menus closed
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  // Close mobile sidebar on route change
+  // Find which menu group the current path belongs to
+  const getActiveMenuId = (pathname) => {
+    const activeMenu = MENU_ITEMS.find(menu =>
+      menu.subItems?.some(item => item.path === pathname)
+    );
+    return activeMenu ? activeMenu.id : null;
+  };
+
+  const [openMenus, setOpenMenus] = useState(() => {
+    const activeId = getActiveMenuId(location.pathname);
+    return activeId ? [activeId] : ['overview']; // Default to overview
+  });
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // When route changes (navigation), auto-open the relevant menu
   useEffect(() => {
     setIsMobileOpen(false);
+    const activeId = getActiveMenuId(location.pathname);
+    if (activeId) {
+      setOpenMenus([activeId]);
+    }
   }, [location.pathname]);
 
   const toggleMenu = (menuId) => {
