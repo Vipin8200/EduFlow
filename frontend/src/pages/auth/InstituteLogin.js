@@ -50,6 +50,8 @@ export default function EduConnectLogin() {
 
     const adminEmail = "admin@gmail.com";
     const adminPassword = "123456";
+    const teacherEmail = "teacher@gmail.com";
+    const teacherPassword = "123456";
 
     if (!validateEmail(email)) {
       showToast("Please enter valid email", "error");
@@ -62,16 +64,23 @@ export default function EduConnectLogin() {
     }
 
     if (email === adminEmail && password === adminPassword) {
-
       setLoading(true);
       showToast("Login successful");
+      localStorage.setItem("userRole", "admin");
 
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 1500);
+    } else if (email === teacherEmail && password === teacherPassword) {
+      setLoading(true);
+      showToast("Teacher login successful");
+      localStorage.setItem("userRole", "teacher");
 
+      setTimeout(() => {
+        window.location.href = "/teacher-dashboard";
+      }, 1500);
     } else {
-      showToast("Invalid admin credentials", "error");
+      showToast("Invalid credentials", "error");
     }
   };
 
@@ -88,11 +97,10 @@ export default function EduConnectLogin() {
             backdrop-blur-xl border shadow-lg
             px-4 py-3 rounded-xl flex items-center gap-2 text-sm
 
-            ${
-              toast.type === "success"
+            ${toast.type === "success"
                 ? "bg-green-500/20 border-green-400/40 text-green-800"
                 : "bg-red-500/20 border-red-400/40 text-red-800"
-            }
+              }
             `}
           >
             <CheckCircle2 size={18} />
@@ -124,7 +132,7 @@ export default function EduConnectLogin() {
         ">
 
           <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <GraduationCap size={20} className="text-black"/>
+            <GraduationCap size={20} className="text-black" />
           </div>
 
           <span className="text-lg font-semibold">
@@ -143,7 +151,7 @@ export default function EduConnectLogin() {
             font-bold
             mb-4
           ">
-            Your school,<br/> in your pocket.
+            Your school,<br /> in your pocket.
           </h1>
 
           <p className="
@@ -196,12 +204,12 @@ export default function EduConnectLogin() {
             rounded-xl px-4 py-3
           ">
 
-            <Mail size={18} className="text-[#c29543] mr-3"/>
+            <Mail size={18} className="text-[#c29543] mr-3" />
 
             <input
               type="text"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@gmail.com"
               className="bg-transparent outline-none w-full text-sm lg:text-[15px]"
             />
@@ -220,21 +228,21 @@ export default function EduConnectLogin() {
             rounded-xl px-4 py-3
           ">
 
-            <Lock size={18} className="text-gray-400 mr-3"/>
+            <Lock size={18} className="text-gray-400 mr-3" />
 
             <input
-              type={showPassword ? "text":"password"}
+              type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="123456"
               className="bg-transparent outline-none w-full text-sm lg:text-[15px]"
             />
 
             <button
               type="button"
-              onClick={()=>setShowPassword(!showPassword)}
+              onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? <Eye size={18}/> : <EyeOff size={18}/>}
+              {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>
 
           </div>
@@ -243,7 +251,7 @@ export default function EduConnectLogin() {
           <div className="flex justify-between items-center mb-6 text-sm">
 
             <label className="flex items-center gap-2">
-              <input type="checkbox"/>
+              <input type="checkbox" />
               Remember me
             </label>
 
@@ -265,10 +273,9 @@ export default function EduConnectLogin() {
               flex items-center justify-center gap-2
               text-sm font-medium text-white transition
 
-              ${
-                loading
-                  ? "bg-black/70 cursor-not-allowed"
-                  : "bg-black hover:opacity-90"
+              ${loading
+                ? "bg-black/70 cursor-not-allowed"
+                : "bg-black hover:opacity-90"
               }
             `}
           >
@@ -284,7 +291,7 @@ export default function EduConnectLogin() {
             ) : (
               <>
                 Sign In
-                <ArrowRight size={18}/>
+                <ArrowRight size={18} />
               </>
             )}
 

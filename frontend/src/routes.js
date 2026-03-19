@@ -61,6 +61,23 @@ import CourseAndSectionSetup from "./pages/RoleManagement/CourseAndSectionSetup"
 import IdCardConfiguration from "./pages/RoleManagement/IdCardConfiguration";
 import AcademicSettings from "./pages/RoleManagement/AcademicSetting";
 
+// Teacher Panel
+import TeacherDashboard from "./pages/TeacherPanel/TeacherDashboard";
+import ClassList from "./pages/TeacherPanel/MyClass/ClassList";
+import StudentList from "./pages/TeacherPanel/MyClass/StudentList";
+import MarkAttendance from "./pages/TeacherPanel/Attendance/MarkAttendance";
+import ViewAttendance from "./pages/TeacherPanel/Attendance/ViewAttendance";
+import ExamSchedule from "./pages/TeacherPanel/Exam/ExamSchedule";
+import MarksEntry from "./pages/TeacherPanel/Exam/MarksEntry";
+import AssignHomeWork from "./pages/TeacherPanel/HomeWork/AssignHomeWork";
+import ReviewHomeWork from "./pages/TeacherPanel/HomeWork/ReviewHomeWork";
+import UploadMaterials from "./pages/TeacherPanel/StudyMaterials/Uploadmaterials";
+import ManageMaterials from "./pages/TeacherPanel/StudyMaterials/ManageMaterials";
+import TeacherTimeTable from "./pages/TeacherPanel/TimeTable";
+import TeacherPanelNotices from "./pages/TeacherPanel/Notices";
+import MyProfile from "./pages/TeacherPanel/profile/MyProfile";
+import TeacherSetting from "./pages/TeacherPanel/profile/Setting";
+
 export const publicRoutes = [
     { path: "/", component: EduConnectLogin },
 ];
@@ -125,4 +142,21 @@ export const protectedRoutes = [
     { path: "/course-setup", component: CourseAndSectionSetup },
     { path: "/id-card-configuration", component: IdCardConfiguration },
     { path: "/academic-settings", component: AcademicSettings },
+
+    // Teacher Routes
+    { path: "/teacher-dashboard", component: TeacherDashboard },
+    { path: "/teacher/class-list", component: ClassList },
+    { path: "/teacher/student-list", component: StudentList },
+    { path: "/teacher/mark-attendance", component: MarkAttendance },
+    { path: "/teacher/view-attendance", component: ViewAttendance },
+    { path: "/teacher/exam-schedule", component: ExamSchedule },
+    { path: "/teacher/mark-entry", component: MarksEntry },
+    { path: "/teacher/assign-homework", component: AssignHomeWork },
+    { path: "/teacher/review-homework", component: ReviewHomeWork },
+    { path: "/teacher/upload-materials", component: UploadMaterials },
+    { path: "/teacher/manage-materials", component: ManageMaterials },
+    { path: "/teacher/personal-timetable", component: TeacherTimeTable },
+    { path: "/teacher/notices", component: TeacherPanelNotices },
+    { path: "/teacher/my-profile", component: MyProfile },
+    { path: "/teacher/settings", component: TeacherSetting },
 ];

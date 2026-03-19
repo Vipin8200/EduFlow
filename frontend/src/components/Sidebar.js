@@ -67,7 +67,8 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 // Menu configuration moved outside component for easy management
-const MENU_ITEMS = [
+// Admin Menu Items
+const ADMIN_MENU_ITEMS = [
   {
     id: "overview",
     label: "Overview",
@@ -248,20 +249,98 @@ const MENU_ITEMS = [
   }
 ];
 
+// Teacher Menu Items
+const TEACHER_MENU_ITEMS = [
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    path: "/teacher-dashboard"
+  },
+  {
+    id: "my-class",
+    label: "My Class",
+    icon: GraduationCap,
+    subItems: [
+      { id: "class-list", label: "Class List", icon: ListTree, path: "/teacher/class-list" },
+      { id: "student-list", label: "Student List", icon: Contact, path: "/teacher/student-list" }
+    ]
+  },
+  {
+    id: "attendance",
+    label: "Attendance",
+    icon: UserCheck,
+    subItems: [
+      { id: "mark-attendance", label: "Mark Attendance", icon: CheckSquare, path: "/teacher/mark-attendance" },
+      { id: "view-attendance", label: "View Attendance", icon: FileBarChart, path: "/teacher/view-attendance" }
+    ]
+  },
+  {
+    id: "exams",
+    label: "Exams",
+    icon: FileSignature,
+    subItems: [
+      { id: "exam-schedule", label: "Exam Schedule", icon: CalendarClock, path: "/teacher/exam-schedule" },
+      { id: "mark-entry", label: "Mark Entry", icon: Pencil, path: "/teacher/mark-entry" }
+    ]
+  },
+  {
+    id: "homework",
+    label: "HomeWork",
+    icon: BookText,
+    subItems: [
+      { id: "assign-homework", label: "Assign Homework", icon: Pencil, path: "/teacher/assign-homework" },
+      { id: "review-homework", label: "Review HomeWork", icon: CheckSquare, path: "/teacher/review-homework" }
+    ]
+  },
+  {
+    id: "study-materials",
+    label: "Study Materials",
+    icon: Library,
+    subItems: [
+      { id: "upload-materials", label: "Upload Materials", icon: UploadCloud, path: "/teacher/upload-materials" },
+      { id: "manage-materials", label: "Manage Materials", icon: Settings2, path: "/teacher/manage-materials" }
+    ]
+  },
+  {
+    id: "timetable",
+    label: "Time Table",
+    icon: Table2,
+    path: "/teacher/personal-timetable"
+  },
+  {
+    id: "notices",
+    label: "Notices",
+    icon: BellRing,
+    path: "/teacher/notices"
+  },
+  {
+    id: "profile",
+    label: "Profile",
+    icon: UserCog,
+    subItems: [
+      { id: "my-profile", label: "My Profile", icon: Contact, path: "/teacher/my-profile" },
+      { id: "settings", label: "Setting", icon: Settings, path: "/teacher/settings" }
+    ]
+  }
+];
+
 export default function Sidebar() {
   const location = useLocation();
+  const userRole = localStorage.getItem("userRole") || "admin";
+  const menuItems = userRole === "teacher" ? TEACHER_MENU_ITEMS : ADMIN_MENU_ITEMS;
 
   // Find which menu group the current path belongs to
   const getActiveMenuId = (pathname) => {
-    const activeMenu = MENU_ITEMS.find(menu =>
-      menu.subItems?.some(item => item.path === pathname)
+    const activeMenu = menuItems.find(menu =>
+      menu.path === pathname || menu.subItems?.some(item => item.path === pathname)
     );
     return activeMenu ? activeMenu.id : null;
   };
 
   const [openMenus, setOpenMenus] = useState(() => {
     const activeId = getActiveMenuId(location.pathname);
-    return activeId ? [activeId] : ['overview']; // Default to overview
+    return activeId ? [activeId] : (userRole === "teacher" ? ['dashboard'] : ['overview']);
   });
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -314,7 +393,7 @@ export default function Sidebar() {
       <div className={`
         fixed lg:static top-0 left-0 z-50
         ${isCollapsed ? 'lg:w-[88px] w-[280px]' : 'w-[280px]'} h-screen bg-[#0a0a0a] text-white flex flex-col font-sans border-r border-[#1f1f1f]
-        transition-all duration-300 ease-in-out
+        transition-[width,transform] duration-200 ease-out
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <style>{`
@@ -338,7 +417,7 @@ export default function Sidebar() {
           <div className="bg-white text-black p-1 rounded-full flex items-center justify-center shrink-0">
             <GraduationCap size={22} strokeWidth={2} />
           </div>
-          <span className={`font-bold text-xl tracking-wide whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}`}>
+          <span className={`font-bold text-xl tracking-wide whitespace-nowrap overflow-hidden transition-[opacity,width] duration-200 ease-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>
             EduConnect
           </span>
 
@@ -352,47 +431,66 @@ export default function Sidebar() {
         </div>
 
         {/* User Info Card */}
-        <div className={`mx-4 mb-6 p-3 bg-[#161616] rounded-xl flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} border border-[#262626] transition-all duration-300`}>
+        <div className={`mx-4 mb-6 p-3 bg-[#161616] rounded-xl flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} border border-[#262626] transition-[width,padding] duration-200 ease-out`}>
           <img
-            src="https://randomuser.me/api/portraits/men/32.jpg"
-            alt="Rakesh Sharma"
+            src={userRole === "teacher" ? "https://randomuser.me/api/portraits/women/45.jpg" : "https://randomuser.me/api/portraits/men/32.jpg"}
+            alt={userRole === "teacher" ? "Priya Verma" : "Rakesh Sharma"}
             className="w-10 h-10 rounded-full object-cover shrink-0"
           />
-          <div className={`flex flex-col whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}`}>
-            <span className="text-sm font-semibold text-gray-200">Rakesh Sharma</span>
-            <span className="text-[12px] text-gray-400 mt-0.5">Institute Admin</span>
+          <div className={`flex flex-col whitespace-nowrap overflow-hidden transition-[opacity,width] duration-200 ease-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>
+            <span className="text-sm font-semibold text-gray-200">{userRole === "teacher" ? "Priya Verma" : "Rakesh Sharma"}</span>
+            <span className="text-[12px] text-gray-400 mt-0.5">{userRole === "teacher" ? "Senior Teacher" : "Institute Admin"}</span>
           </div>
         </div>
 
         {/* Navigation Menus */}
         <div className="flex-1 overflow-y-auto px-3 sidebar-scrollbar space-y-2 pb-4">
-          {MENU_ITEMS.map((menu) => {
+          {menuItems.map((menu) => {
             const isOpen = openMenus.includes(menu.id) && !isCollapsed;
             const hasSub = menu.subItems && menu.subItems.length > 0;
+            const isSingleActive = !hasSub && location.pathname === menu.path;
             return (
               <div key={menu.id} className="mb-1">
                 {/* Parent Menu */}
-                <div
-                  onClick={() => hasSub && toggleMenu(menu.id)}
-                  className={`flex items-center ${isCollapsed ? 'justify-center py-3' : 'justify-between px-3 py-3'} rounded-xl cursor-pointer transition-colors hover:bg-[#161616] text-gray-200 group relative`}
-                  title={isCollapsed ? menu.label : ""}
-                >
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <menu.icon size={18} className={`text-gray-400 shrink-0 ${isCollapsed ? 'group-hover:text-white' : ''}`} />
-                    <span
-                      className={`text-[14px] font-semibold tracking-wide truncate transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}`}
-                      title={menu.label}
-                    >
-                      {menu.label}
-                    </span>
+                {hasSub ? (
+                  <div
+                    onClick={() => toggleMenu(menu.id)}
+                    className={`flex items-center ${isCollapsed ? 'justify-center py-3' : 'justify-between px-3 py-3'} rounded-xl cursor-pointer transition-colors hover:bg-[#161616] text-gray-200 group relative`}
+                    title={isCollapsed ? menu.label : ""}
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <menu.icon size={18} className={`text-gray-400 shrink-0 ${isCollapsed ? 'group-hover:text-white' : ''}`} />
+                      <span
+                        className={`text-[14px] font-semibold tracking-wide truncate transition-[opacity,width] duration-200 ease-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}
+                        title={menu.label}
+                      >
+                        {menu.label}
+                      </span>
+                    </div>
+                    {!isCollapsed && (
+                      <ChevronDown
+                        size={16}
+                        className={`text-gray-400 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                      />
+                    )}
                   </div>
-                  {!isCollapsed && hasSub && (
-                    <ChevronDown
-                      size={16}
-                      className={`text-gray-400 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                    />
-                  )}
-                </div>
+                ) : (
+                  <Link
+                    to={menu.path}
+                    className={`flex items-center ${isCollapsed ? 'justify-center py-3' : 'px-3 py-3'} rounded-xl cursor-pointer transition-all duration-200 group relative ${isSingleActive ? activeColor : 'text-gray-200 hover:bg-[#161616]'}`}
+                    title={isCollapsed ? menu.label : ""}
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <menu.icon size={18} className={`${isSingleActive ? 'text-white' : 'text-gray-400'} shrink-0`} />
+                      <span
+                        className={`text-[14px] font-semibold tracking-wide truncate transition-[opacity,width] duration-200 ease-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}
+                        title={menu.label}
+                      >
+                        {menu.label}
+                      </span>
+                    </div>
+                  </Link>
+                )}
 
                 {/* Submenus with CSS transition */}
                 <div
@@ -434,7 +532,7 @@ export default function Sidebar() {
             title={isCollapsed ? "Logout" : ""}
           >
             <LogOut size={18} className="shrink-0" />
-            <span className={`text-sm font-medium tracking-wide whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}`}>
+            <span className={`text-sm font-medium tracking-wide whitespace-nowrap overflow-hidden transition-[opacity,width] duration-200 ease-out ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>
               Logout
             </span>
           </button>

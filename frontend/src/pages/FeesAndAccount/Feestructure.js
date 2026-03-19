@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    ListTree, Plus, PlusCircle, Search, Edit2,
+    ListTree, Plus, CirclePlus, Search, Edit2,
     Trash2, ChevronRight, CheckCircle, Save,
     Settings, Users, Info
 } from 'lucide-react';
@@ -28,7 +28,7 @@ const FeeStructure = () => {
                     onClick={() => setActiveTab('create')}
                     className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 ${activeTab === 'create' ? 'bg-[#C29543] text-white shadow-md' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'}`}
                 >
-                    <PlusCircle size={18} /> Create Structure
+                    <CirclePlus size={18} /> Create Structure
                 </button>
                 <button
                     onClick={() => setActiveTab('assign')}

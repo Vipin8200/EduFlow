@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    PlusCircle, Settings2, Trash2, Edit2,
+    CirclePlus, Settings2, Trash2, Edit2,
     Save, Filter, ChevronRight, Info,
     CheckCircle2, ListChecks, Award, Layout
 } from 'lucide-react';
@@ -27,7 +27,7 @@ const ExamSetup = () => {
                     onClick={() => setActiveTab('creation')}
                     className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 ${activeTab === 'creation' ? 'bg-[#C29543] text-white shadow-md' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'}`}
                 >
-                    <PlusCircle size={18} /> Exam Creation
+                    <CirclePlus size={18} /> Exam Creation
                 </button>
                 <button
                     onClick={() => setActiveTab('pattern')}
@@ -178,7 +178,7 @@ const ExamSetup = () => {
                 <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
                     <div className="flex items-center justify-between mb-10">
                         <h3 className="font-black text-gray-900 text-xl italic underline decoration-[#C29543]/20 decoration-8 underline-offset-[-2px]">Grading Policy Management</h3>
-                        <button className="px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-gray-400 font-black text-xs hover:text-[#C29543] transition-all"><PlusCircle size={14} className="inline mr-1" /> Add Group</button>
+                        <button className="px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-gray-400 font-black text-xs hover:text-[#C29543] transition-all"><CirclePlus size={14} className="inline mr-1" /> Add Group</button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         {[
