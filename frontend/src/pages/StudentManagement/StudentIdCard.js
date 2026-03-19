@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import {
     CheckCircle, Search, RefreshCw,
     Printer, ChevronLeft, ChevronRight, Palette, X,
-    GraduationCap, Layout, Type, Shield, ToggleLeft
+    GraduationCap, Layout, Type, ToggleLeft
 } from 'lucide-react';
 
 // ---- MOCK STUDENT DATA ----

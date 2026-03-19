@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import {
-    GraduationCap, Plus, Search, Filter, MoreVertical,
-    Edit2, Trash2, CheckCircle, XCircle, MapPin,
-    Phone, Mail, Calendar, Eye, Users, RefreshCw, User,
+    Plus, Search,
+    Edit2, Trash2, XCircle,
+    Phone, Eye, Users, RefreshCw, User,
     ChevronLeft, ChevronRight
 } from 'lucide-react';
 
@@ -525,8 +525,8 @@ const StudentMaster = () => {
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
                                     className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold transition-colors ${currentPage === page
-                                            ? 'bg-[#C29543] text-white shadow-sm shadow-[#C29543]/20'
-                                            : 'text-gray-600 hover:bg-gray-100'
+                                        ? 'bg-[#C29543] text-white shadow-sm shadow-[#C29543]/20'
+                                        : 'text-gray-600 hover:bg-gray-100'
                                         }`}
                                 >
                                     {page}
